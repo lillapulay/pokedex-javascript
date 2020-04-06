@@ -1,27 +1,33 @@
-var repository = [
-{
-  pokemonName : 'Phanpy',
-  pokemonHeight : 0.5,
-  pokemonAbilities : ['Sand-veil', 'Pickup'],
-  pokemonTypes : ['Ground'],
-},
-{
-  pokemonName : 'Crustle',
-  pokemonHeight : 1.4,
-  pokemonAbilities : ['Sturdy', 'Shell-armor', 'Weak-armor'],
-  pokemonTypes : ['Bug', 'Rock'],
-},
-{
-  pokemonName : 'Rhyhorn',
-  pokemonHeight : 1.00,
-  pokemonAbilities : ['Lightningrod', 'Rock-head', 'Reckless'],
-  pokemonTypes : ['Rock', 'Ground'],
-},
-{
-  pokemonName : 'Psyduck',
-  pokemonHeight : 0.8,
-  pokemonAbilities : ['Damp', 'Cloud-nine', 'Swift-swim'],
-  pokemonTypes : ['Water'],
+var pokemonList = [
+  {
+    name : 'Phanpy',
+    height : 0.5,
+    abilities : ['Sand-veil', 'Pickup'],
+    types : ['Ground'],
+  },
+  {
+    name : 'Crustle',
+    height : 1.4,
+    abilities : ['Sturdy', 'Shell-armor', 'Weak-armor'],
+    types : ['Bug', 'Rock'],
+  },
+  {
+    name : 'Rhyhorn',
+    height : 1.00,
+    abilities : ['Lightningrod', 'Rock-head', 'Reckless'],
+    types : ['Rock', 'Ground'],
+  },
+  {
+    name : 'Psyduck',
+    height : 0.8,
+    abilities : ['Damp', 'Cloud-nine', 'Swift-swim'],
+    types : ['Water'],
+  }
+];
+
+for (var i = 0; i < pokemonList.length; i++) {
+  document.write('<h3>' + pokemonList[i].name + '</h3>' + ' Height: ' + pokemonList[i].height)
+if (pokemonList[i].height > 1.00) {
+  document.write(' (Wow that\'s big!)' )
+  }
 }
-]
-console.log(repository)
