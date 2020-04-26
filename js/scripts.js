@@ -44,7 +44,7 @@ var pokemonRepository = (function () {
     button.addEventListener('click', function(event) {
       //calling showDetails as the event handler function
       showDetails(pokemon);
-      });
+    });
     button.innerText = pokemon.name;
     button.classList.add('my-button');
     listItem.appendChild(button);
