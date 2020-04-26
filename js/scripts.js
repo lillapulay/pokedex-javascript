@@ -27,7 +27,6 @@ var pokemonRepository = (function () {
     }
   ]; // end of repository
 
-
 // defining public functions separately
   function getAll() {
     return repository;
@@ -37,19 +36,35 @@ var pokemonRepository = (function () {
     repository.push(pokemon);
   }
 
+  function addListItem(pokemon) {
+    var pokemonList = document.querySelector('.pokemon-list');
+    var listItem = document.createElement('li');
+    var button = document.createElement('button');
+    //adding an event listener to the button - creating it was enough, no need to querySelector it
+    button.addEventListener('click', function(event) {
+      //calling showDetails as the event handler function
+      showDetails(pokemon);
+      });
+    button.innerText = pokemon.name;
+    button.classList.add('my-button');
+    listItem.appendChild(button);
+    pokemonList.appendChild(listItem);
+  }
+
+  function showDetails(pokemon) {
+    console.log(pokemon);
+  }
+
   return {
     add: add,
-    getAll: getAll
+    getAll: getAll,
+    addListItem: addListItem,
+    showDetails: showDetails
   };
 })(); // end of IIFE
 
 function myLoopFunction(pokemon){
-  document.write('<h3>' +  pokemon.name + '</h3>');
-  document.write('<p>'
-    + ' Height: ' +  pokemon.height + '<br>'
-    + ' Abilities: ' +  pokemon.abilities + '<br>'
-    + ' Type: ' +  pokemon.types +
-    '</p>');
+  pokemonRepository.addListItem(pokemon);
 }
 
-pokemonRepository.getAll().forEach(myLoopFunction); //not sure how to rewrite the forEach for the IIFE - not working
+pokemonRepository.getAll().forEach(myLoopFunction);
