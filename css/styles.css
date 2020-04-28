@@ -20,6 +20,7 @@ h1 {
   color: #FFEFD5;
   font-weight: 600;
   text-decoration: none;
+  text-transform: capitalize;
   /*padding: 10px;*/
   border-radius: 15px;
   border-bottom: 2px solid #2b2b2b;
@@ -31,6 +32,7 @@ h1 {
   min-width: 150px;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .my-button:hover,
@@ -53,13 +55,11 @@ h1 {
   margin: 0;
 }
 
-
 /* Will improve this part once the site has a little more content and button sizes are clear*/
 @media all and (max-width: 750px) {
   .pokemon-list li {
     width: 100%;
     max-width: 100%;
-    margin: 0 auto;
-    padding: 5px;
+    margin: 0;
   }
 }
