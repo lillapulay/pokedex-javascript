@@ -1,39 +1,16 @@
 //IIFE wrap
 var pokemonRepository = (function () {
-  var repository = [ // original repository moved into the wrap - no changes made
-    {
-      name : 'Phanpy',
-      height : 0.5,
-      abilities : ['Sand-veil', ' Pickup'],
-      types : ['Ground'],
-    },
-    {
-      name : 'Crustle',
-      height : 1.4,
-      abilities : ['Sturdy', ' Shell-armor', ' Weak-armor'],
-      types : ['Bug', ' Rock'],
-    },
-    {
-      name : 'Rhyhorn',
-      height : 1.00,
-      abilities : ['Lightningrod', ' Rock-head', ' Reckless'],
-      types : ['Rock', ' Ground'],
-    },
-    {
-      name : 'Psyduck',
-      height : 0.8,
-      abilities : ['Damp', ' Cloud-nine', ' Swift-swim'],
-      types : ['Water'],
-    }
-  ]; // end of repository
+  var repository = [];
+  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
 // defining public functions separately
-  function getAll() {
-    return repository;
-  }
 
   function add(pokemon) {
     repository.push(pokemon);
+  }
+
+  function getAll() {
+    return repository;
   }
 
   function addListItem(pokemon) {
@@ -52,19 +29,54 @@ var pokemonRepository = (function () {
   }
 
   function showDetails(pokemon) {
+    pokemonRepository.loadDetails(pokemon).then(function() {
     console.log(pokemon);
+    });
+  }
+
+  function loadList() {
+    return fetch(apiUrl).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      json.results.forEach(function (item) {
+        var pokemon = {
+          name: item.name,
+          detailsUrl: item.url
+        };
+        add(pokemon);
+      });
+    }).catch(function (e) {
+      console.error(e);
+    })
+  }
+
+  function loadDetails(item) {
+  var url = item.detailsUrl;
+  return fetch(url).then(function (response) {
+    return response.json();
+  }).then(function (details) {
+    // Now we add the details to the item
+    item.imageUrl = details.sprites.front_default;
+    item.height = details.height;
+    item.types = details.types;
+  }).catch(function (e) {
+    console.error(e);
+  });
   }
 
   return {
     add: add,
     getAll: getAll,
     addListItem: addListItem,
-    showDetails: showDetails
+    showDetails: showDetails,
+    loadList: loadList,
+    loadDetails: loadDetails
   };
 })(); // end of IIFE
 
-function myLoopFunction(pokemon){
-  pokemonRepository.addListItem(pokemon);
-}
-
-pokemonRepository.getAll().forEach(myLoopFunction);
+pokemonRepository.loadList().then(function() {
+  // Now the data is loaded!
+  pokemonRepository.getAll().forEach(function(pokemon){
+    pokemonRepository.addListItem(pokemon);
+  });
+});
