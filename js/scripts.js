@@ -29,8 +29,8 @@ var pokemonRepository = (function () {
   }
 
   function showDetails(pokemon) {
-    pokemonRepository.loadDetails(pokemon).then(function() {
-    console.log(pokemon);
+    loadDetails(pokemon).then(function() {
+      console.log(pokemon);
     });
   }
 
@@ -51,26 +51,28 @@ var pokemonRepository = (function () {
   }
 
   function loadDetails(item) {
-  var url = item.detailsUrl;
-  return fetch(url).then(function (response) {
-    return response.json();
-  }).then(function (details) {
-    // Now we add the details to the item
-    item.imageUrl = details.sprites.front_default;
-    item.height = details.height;
-    item.types = details.types;
-  }).catch(function (e) {
-    console.error(e);
-  });
+    var url = item.detailsUrl;
+    return fetch(url).then(function (response) {
+      return response.json();
+    }).then(function (details) {
+      // Now we add the details to the item
+      item.imageUrl = details.sprites.front_default;
+      item.height = details.height;
+      item.types = details.types;
+    }).catch(function (e) {
+      console.error(e);
+    });
   }
 
   return {
     add: add,
     getAll: getAll,
     addListItem: addListItem,
-    showDetails: showDetails,
     loadList: loadList,
-    loadDetails: loadDetails
+    /* showDetails and loadDetails are private functions and as we are not using them from outside the IIFE
+    they don't NEED to be returned */
+    //showDetails: showDetails,
+    //loadDetails: loadDetails
   };
 })(); // end of IIFE
 
