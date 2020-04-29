@@ -3,8 +3,12 @@ var pokemonRepository = (function () {
   var repository = [];
   var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-// defining public functions separately
+  // The console couldn't read some event listeners, so I moved the following 2 variables here:
+  // var button also needs to be defined in function addListItem, otherwise only 1 button appears - now I define this variable twice
+  var button = document.createElement('button');
+  var $modalContainer = document.querySelector('#modal-container');
 
+  // defining public functions separately
   function add(pokemon) {
     repository.push(pokemon);
   }
@@ -17,31 +21,99 @@ var pokemonRepository = (function () {
     var pokemonList = document.querySelector('.pokemon-list');
     var listItem = document.createElement('li');
     var button = document.createElement('button');
+    button.innerText = pokemon.name;
+    button.classList.add('my-button');
+    listItem.appendChild(button);
+    pokemonList.appendChild(listItem);
     //adding an event listener to the button - creating it was enough, no need to querySelector it
     button.addEventListener('click', function(event) {
       //calling showDetails as the event handler function
       showDetails(pokemon);
     });
-    button.innerText = pokemon.name;
-    button.classList.add('my-button');
-    listItem.appendChild(button);
-    pokemonList.appendChild(listItem);
   }
 
-  function showDetails(pokemon) {
-    loadDetails(pokemon).then(function() {
-      console.log(pokemon);
+
+    function showDetails(pokemon) {
+      loadDetails(pokemon).then(function() {
+        showModal(pokemon);
+      });
+    }
+
+  function showModal(pokemon) {
+
+      // Clear all existing modal content
+      $modalContainer.innerHTML = '';
+
+      var modal = document.createElement('div');
+      modal.classList.add('modal');
+
+      // Add the new modal content
+      var closeButtonElement = document.createElement('button');
+      closeButtonElement.classList.add('modal-close');
+      closeButtonElement.innerText = 'Close';
+      closeButtonElement.addEventListener('click', hideModal);
+
+      var nameElement = document.createElement('h1');
+      nameElement.innerText = pokemon.name;
+
+      var imageElement = document.createElement('img');
+      imageElement.setAttribute("src", pokemon.imageUrl);
+
+      var heightElement = document.createElement('p');
+      heightElement.innerText = 'Height: ' + pokemon.height;
+
+      var weightElement = document.createElement('p');
+      weightElement.innerText = 'Weight: ' + pokemon.weight;
+
+      var typesElement = document.createElement('p');
+      typesElement.innerText = 'Type: ' + pokemon.types;
+
+      var abilitiesElement = document.createElement('p');
+      abilitiesElement.innerText = 'Abilities: ' + pokemon.abilities;
+
+      modal.append(closeButtonElement);
+      modal.append(nameElement);
+      modal.append(imageElement);
+      modal.append(heightElement);
+      modal.append(weightElement);
+      modal.append(typesElement);
+      modal.append(abilitiesElement);
+      $modalContainer.appendChild(modal);
+
+      $modalContainer.classList.add('is-visible');
+    }
+
+    function hideModal() {
+      $modalContainer.classList.remove('is-visible');
+    }
+
+    button.addEventListener('click', () => {
+      showModal(pokemon);
     });
-  }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
+        hideModal();
+      }
+    });
+
+    $modalContainer.addEventListener('click', (e) => {
+      /* Since this is also triggered when clicking INSIDE the modal container,
+         We only want to close if the user clicks directly on the overlay */
+      var target = e.target;
+      if (target === $modalContainer) {
+        hideModal();
+      }
+    });
 
   function loadList() {
     return fetch(apiUrl).then(function (response) {
       return response.json();
     }).then(function (json) {
-      json.results.forEach(function (item) {
+      json.results.forEach(function (pokemon) {
         var pokemon = {
-          name: item.name,
-          detailsUrl: item.url
+          name: pokemon.name,
+          detailsUrl: pokemon.url
         };
         add(pokemon);
       });
@@ -50,15 +122,24 @@ var pokemonRepository = (function () {
     })
   }
 
-  function loadDetails(item) {
-    var url = item.detailsUrl;
+  function loadDetails(pokemon) {
+    var url = pokemon.detailsUrl;
     return fetch(url).then(function (response) {
       return response.json();
     }).then(function (details) {
       // Now we add the details to the item
-      item.imageUrl = details.sprites.front_default;
-      item.height = details.height;
-      item.types = details.types;
+      pokemon.imageUrl = details.sprites.front_default;
+      pokemon.height = details.height;
+      pokemon.weight = details.weight;
+      // For types and abilities I'm not sure how to add a space for when the modal lists them - variablename.join(', '); - if it solves it, how do I implement it?
+      pokemon.types = [];
+        for (var i = 0; i < details.types.length; i++) {
+          pokemon.types.push(details.types[i].type.name);
+        };
+      pokemon.abilities = [];
+        for (var i = 0; i < details.abilities.length; i++) {
+          pokemon.abilities.push(details.abilities[i].ability.name);
+        };
     }).catch(function (e) {
       console.error(e);
     });
@@ -69,10 +150,12 @@ var pokemonRepository = (function () {
     getAll: getAll,
     addListItem: addListItem,
     loadList: loadList,
+    showModal: showModal,
+    hideModal: hideModal,
     /* showDetails and loadDetails are private functions and as we are not using them from outside the IIFE
     they don't NEED to be returned */
-    //showDetails: showDetails,
-    //loadDetails: loadDetails
+    showDetails: showDetails,
+    loadDetails: loadDetails
   };
 })(); // end of IIFE
 
