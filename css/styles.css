@@ -10,6 +10,7 @@ h1 {
   color: #A0522D;
   padding-top: 15px;
   text-align: center;
+  text-transform: capitalize;
 }
 
 .my-button {
@@ -19,6 +20,7 @@ h1 {
   background-color: #ffad33;
   color: #FFEFD5;
   font-weight: 600;
+  font-size: 18px;
   text-decoration: none;
   text-transform: capitalize;
   /*padding: 10px;*/
@@ -32,7 +34,7 @@ h1 {
   min-width: 150px;
   padding-top: 5px;
   padding-bottom: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .my-button:hover,
@@ -43,6 +45,7 @@ h1 {
 
 .listing {
   text-align: center;
+  margin-bottom: 40px;
 }
 
 .pokemon-list {
@@ -54,6 +57,66 @@ h1 {
 .pokemon-list li {
   margin: 0;
 }
+
+#modal-container {
+  display: none;
+}
+
+#modal-container.is-visible {
+  position: fixed;
+  padding: 20px;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+
+  /* To show it above other content */
+  z-index: 999;
+
+  /* To allow scrolling if the screen is not high enough*/
+  overflow: auto;
+
+  /* To center the modal */
+  display: grid;
+  text-align: center;
+}
+
+.modal {
+  margin: auto;
+  display: inline-block;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 15px;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  background: #FAEBD7;
+}
+
+.modal-close {
+  float: right;
+  -webkit-appearance: none;
+  border: 0;
+  background: none;
+  color: #777;
+  text-decoration: underline;
+}
+
+.modal h1 {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.modal p {
+  text-align: center;
+}
+
+/*.modal img {
+  width: 150px;
+  height: auto;
+}*/
 
 /* Will improve this part once the site has a little more content and button sizes are clear*/
 @media all and (max-width: 750px) {
