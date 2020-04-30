@@ -2,10 +2,6 @@
 var pokemonRepository = (function () {
   var repository = [];
   var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-
-  // The console couldn't read some event listeners, so I moved the following 2 variables here:
-  // var button also needs to be defined in function addListItem, otherwise only 1 button appears - now I define this variable twice
-  var button = document.createElement('button');
   var $modalContainer = document.querySelector('#modal-container');
 
   // defining public functions separately
@@ -33,78 +29,73 @@ var pokemonRepository = (function () {
   }
 
 
-    function showDetails(pokemon) {
-      loadDetails(pokemon).then(function() {
-        showModal(pokemon);
-      });
-    }
-
-  function showModal(pokemon) {
-
-      // Clear all existing modal content
-      $modalContainer.innerHTML = '';
-
-      var modal = document.createElement('div');
-      modal.classList.add('modal');
-
-      // Add the new modal content
-      var closeButtonElement = document.createElement('button');
-      closeButtonElement.classList.add('modal-close');
-      closeButtonElement.innerText = 'Close';
-      closeButtonElement.addEventListener('click', hideModal);
-
-      var nameElement = document.createElement('h1');
-      nameElement.innerText = pokemon.name;
-
-      var imageElement = document.createElement('img');
-      imageElement.setAttribute("src", pokemon.imageUrl);
-
-      var heightElement = document.createElement('p');
-      heightElement.innerText = 'Height: ' + pokemon.height;
-
-      var weightElement = document.createElement('p');
-      weightElement.innerText = 'Weight: ' + pokemon.weight;
-
-      var typesElement = document.createElement('p');
-      typesElement.innerText = 'Type: ' + pokemon.types;
-
-      var abilitiesElement = document.createElement('p');
-      abilitiesElement.innerText = 'Abilities: ' + pokemon.abilities;
-
-      modal.append(closeButtonElement);
-      modal.append(nameElement);
-      modal.append(imageElement);
-      modal.append(heightElement);
-      modal.append(weightElement);
-      modal.append(typesElement);
-      modal.append(abilitiesElement);
-      $modalContainer.appendChild(modal);
-
-      $modalContainer.classList.add('is-visible');
-    }
-
-    function hideModal() {
-      $modalContainer.classList.remove('is-visible');
-    }
-
-    button.addEventListener('click', () => {
+  function showDetails(pokemon) {
+    loadDetails(pokemon).then(function() {
       showModal(pokemon);
     });
+  }
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
-        hideModal();
-      }
-    });
+  function showModal(pokemon) {
+    // Clear all existing modal content
+    $modalContainer.innerHTML = '';
 
-    $modalContainer.addEventListener('click', (e) => {
-      /* Since this is also triggered when clicking INSIDE the modal container,
-         We only want to close if the user clicks directly on the overlay */
-      var target = e.target;
-      if (target === $modalContainer) {
-        hideModal();
-      }
-    });
+    var modal = document.createElement('div');
+    modal.classList.add('modal');
+
+    // Add the new modal content
+    var closeButtonElement = document.createElement('button');
+    closeButtonElement.classList.add('modal-close');
+    closeButtonElement.innerText = 'Close';
+    closeButtonElement.addEventListener('click', hideModal);
+
+    var nameElement = document.createElement('h1');
+    nameElement.innerText = pokemon.name;
+
+    var imageElement = document.createElement('img');
+    imageElement.setAttribute("src", pokemon.imageUrl);
+
+    var heightElement = document.createElement('p');
+    heightElement.innerText = 'Height: ' + pokemon.height;
+
+    var weightElement = document.createElement('p');
+    weightElement.innerText = 'Weight: ' + pokemon.weight;
+
+    var typesElement = document.createElement('p');
+    typesElement.innerText = 'Type: ' + pokemon.types.join(', ');
+
+    var abilitiesElement = document.createElement('p');
+    abilitiesElement.innerText = 'Abilities: ' + pokemon.abilities.join(', ');
+
+    modal.append(closeButtonElement);
+    modal.append(nameElement);
+    modal.append(imageElement);
+    modal.append(heightElement);
+    modal.append(weightElement);
+    modal.append(typesElement);
+    modal.append(abilitiesElement);
+    $modalContainer.appendChild(modal);
+
+    $modalContainer.classList.add('is-visible');
+  }
+
+  function hideModal() {
+    $modalContainer.classList.remove('is-visible');
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
+      hideModal();
+    }
+  });
+
+  $modalContainer.addEventListener('click', (e) => {
+    /* Since this is also triggered when clicking INSIDE the modal container,
+    We only want to close if the user clicks directly on the overlay */
+    var target = e.target;
+    if (target === $modalContainer) {
+      hideModal();
+    }
+  });
 
   function loadList() {
     return fetch(apiUrl).then(function (response) {
