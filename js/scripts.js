@@ -3,8 +3,10 @@ var pokemonRepository = (function () {
   var repository = [];
   var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
   var $modalContainer = document.querySelector('#modal-container');
+  var $modalContainer2 = $('#modal-container');
 
-  // defining public functions separately
+
+  // Defining public functions separately
   function add(pokemon) {
     repository.push(pokemon);
   }
@@ -14,26 +16,76 @@ var pokemonRepository = (function () {
   }
 
   function addListItem(pokemon) {
-    var pokemonList = document.querySelector('.pokemon-list');
-    var listItem = document.createElement('li');
-    var button = document.createElement('button');
-    button.innerText = pokemon.name;
-    button.classList.add('my-button');
-    listItem.appendChild(button);
-    pokemonList.appendChild(listItem);
-    //adding an event listener to the button - creating it was enough, no need to querySelector it
-    button.addEventListener('click', function(event) {
-      //calling showDetails as the event handler function
-      showDetails(pokemon);
-    });
-  }
+    var $pokemonList = $('.pokemon-list');
+    var $listItem = $('<li class="list-item"></li>');
+    var $button = $('<button class="my-button"></button').html(pokemon.name);
 
+    //$button.html(pokemon.name);
+    $pokemonList.append($listItem);
+    $listItem.append($button);
+    $button.on("click", function() {
+      showDetails(pokemon);
+    })
+  }
 
   function showDetails(pokemon) {
     loadDetails(pokemon).then(function() {
       showModal(pokemon);
     });
   }
+
+
+
+  function loadList() {
+    return fetch(apiUrl).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      json.results.forEach(function (pokemon) {
+        var pokemon = {
+          name: pokemon.name,
+          detailsUrl: pokemon.url
+        };
+        add(pokemon);
+      });
+    }).catch(function (e) {
+      console.error(e);
+    })
+  }
+
+
+
+  function loadDetails(pokemon) {
+    var url = pokemon.detailsUrl;
+    return fetch(url).then(function (response) {
+      return response.json();
+    }).then(function (details) {
+      // Now we add the details to the item
+      pokemon.imageUrl = details.sprites.front_default;
+      pokemon.height = details.height;
+      pokemon.weight = details.weight;
+      // For types and abilities I'm not sure how to add a space for when the modal lists them - variablename.join(', '); - if it solves it, how do I implement it?
+      pokemon.types = [];
+        for (var i = 0; i < details.types.length; i++) {
+          pokemon.types.push(details.types[i].type.name);
+        };
+      pokemon.abilities = [];
+        for (var i = 0; i < details.abilities.length; i++) {
+          pokemon.abilities.push(details.abilities[i].ability.name);
+        };
+    }).catch(function (e) {
+      console.error(e);
+    });
+  }
+
+
+
+
+
+
+
+
+
+
 
   function showModal(pokemon) {
     // Clear all existing modal content
@@ -97,44 +149,9 @@ var pokemonRepository = (function () {
     }
   });
 
-  function loadList() {
-    return fetch(apiUrl).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      json.results.forEach(function (pokemon) {
-        var pokemon = {
-          name: pokemon.name,
-          detailsUrl: pokemon.url
-        };
-        add(pokemon);
-      });
-    }).catch(function (e) {
-      console.error(e);
-    })
-  }
 
-  function loadDetails(pokemon) {
-    var url = pokemon.detailsUrl;
-    return fetch(url).then(function (response) {
-      return response.json();
-    }).then(function (details) {
-      // Now we add the details to the item
-      pokemon.imageUrl = details.sprites.front_default;
-      pokemon.height = details.height;
-      pokemon.weight = details.weight;
-      // For types and abilities I'm not sure how to add a space for when the modal lists them - variablename.join(', '); - if it solves it, how do I implement it?
-      pokemon.types = [];
-        for (var i = 0; i < details.types.length; i++) {
-          pokemon.types.push(details.types[i].type.name);
-        };
-      pokemon.abilities = [];
-        for (var i = 0; i < details.abilities.length; i++) {
-          pokemon.abilities.push(details.abilities[i].ability.name);
-        };
-    }).catch(function (e) {
-      console.error(e);
-    });
-  }
+
+
 
   return {
     add: add,
