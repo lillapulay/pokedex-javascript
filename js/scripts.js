@@ -1,5 +1,5 @@
-//IIFE wrap
-var pokemonRepository = (function () {
+[]; //IIFE wrap
+var pokemonRepository = (function() {
   var repository = [];
   var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
   var $modalContainer = document.querySelector('#modal-container');
@@ -28,7 +28,6 @@ var pokemonRepository = (function () {
     });
   }
 
-
   function showDetails(pokemon) {
     loadDetails(pokemon).then(function() {
       showModal(pokemon);
@@ -52,7 +51,7 @@ var pokemonRepository = (function () {
     nameElement.innerText = pokemon.name;
 
     var imageElement = document.createElement('img');
-    imageElement.setAttribute("src", pokemon.imageUrl);
+    imageElement.setAttribute('src', pokemon.imageUrl);
 
     var heightElement = document.createElement('p');
     heightElement.innerText = 'Height: ' + pokemon.height;
@@ -82,13 +81,16 @@ var pokemonRepository = (function () {
     $modalContainer.classList.remove('is-visible');
   }
 
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && $modalContainer.classList.contains('is-visible')) {
+  window.addEventListener('keydown', e => {
+    if (
+      e.key === 'Escape' &&
+      $modalContainer.classList.contains('is-visible')
+    ) {
       hideModal();
     }
   });
 
-  $modalContainer.addEventListener('click', (e) => {
+  $modalContainer.addEventListener('click', e => {
     /* Since this is also triggered when clicking INSIDE the modal container,
     We only want to close if the user clicks directly on the overlay */
     var target = e.target;
@@ -98,42 +100,48 @@ var pokemonRepository = (function () {
   });
 
   function loadList() {
-    return fetch(apiUrl).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      json.results.forEach(function (pokemon) {
-        var pokemon = {
-          name: pokemon.name,
-          detailsUrl: pokemon.url
-        };
-        add(pokemon);
+    return fetch(apiUrl)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(json) {
+        json.results.forEach(function(pokemon) {
+          var pokemon = {
+            name: pokemon.name,
+            detailsUrl: pokemon.url
+          };
+          add(pokemon);
+        });
+      })
+      .catch(function(e) {
+        console.error(e);
       });
-    }).catch(function (e) {
-      console.error(e);
-    })
   }
 
   function loadDetails(pokemon) {
     var url = pokemon.detailsUrl;
-    return fetch(url).then(function (response) {
-      return response.json();
-    }).then(function (details) {
-      // Now we add the details to the item
-      pokemon.imageUrl = details.sprites.front_default;
-      pokemon.height = details.height;
-      pokemon.weight = details.weight;
-      // For types and abilities I'm not sure how to add a space for when the modal lists them - variablename.join(', '); - if it solves it, how do I implement it?
-      pokemon.types = [];
+    return fetch(url)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(details) {
+        // Now we add the details to the item
+        pokemon.imageUrl = details.sprites.front_default;
+        pokemon.height = details.height;
+        pokemon.weight = details.weight;
+        // For types and abilities I'm not sure how to add a space for when the modal lists them - variablename.join(', '); - if it solves it, how do I implement it?
+        pokemon.types = [];
         for (var i = 0; i < details.types.length; i++) {
           pokemon.types.push(details.types[i].type.name);
-        };
-      pokemon.abilities = [];
+        }
+        pokemon.abilities = [];
         for (var i = 0; i < details.abilities.length; i++) {
           pokemon.abilities.push(details.abilities[i].ability.name);
-        };
-    }).catch(function (e) {
-      console.error(e);
-    });
+        }
+      })
+      .catch(function(e) {
+        console.error(e);
+      });
   }
 
   return {
@@ -152,7 +160,7 @@ var pokemonRepository = (function () {
 
 pokemonRepository.loadList().then(function() {
   // Now the data is loaded!
-  pokemonRepository.getAll().forEach(function(pokemon){
+  pokemonRepository.getAll().forEach(function(pokemon) {
     pokemonRepository.addListItem(pokemon);
   });
 });
