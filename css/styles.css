@@ -1,40 +1,45 @@
-/* Will define variables a little further into this exercise */
+* {
+  box-sizing: border-box;
+}
 
 body {
-  background-color: #FFE4C4;
+  background: no-repeat right/50% url("../img/background.jpg"); /*Source: https://wallpapercave.com/wp/wp1864333.jpg */
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: 'Shojumaru', cursive;
 }
 
 h1 {
   font-size: 25px;
   font-weight: 600;
-  color: #A0522D;
+  color: #FFEFD5;
   padding-top: 15px;
   text-align: center;
   text-transform: capitalize;
+  letter-spacing: 4px;
+  text-shadow: 2px 2px 20px grey;
 }
 
 .my-button {
-  border: none;
-  display: inline-block;
   font-family: inherit;
-  background-color: #ffad33;
+  background-image: linear-gradient(to bottom right, #418ced, #030915);
   color: #FFEFD5;
+  border: 1px solid black;
   font-weight: 600;
   font-size: 18px;
-  text-decoration: none;
+  letter-spacing: 4px;
   text-transform: capitalize;
-  /*padding: 10px;*/
-  border-radius: 15px;
-  border-bottom: 2px solid #2b2b2b;
+  box-shadow: 2px 2px 15px black;
+  border-radius: 50px 15px 50px 15px;
   transition-duration: 0.4s;
   transition-property: opacity;
-  /* Will adjust depending on final outlook */
-  width: 70%;
+  width: 100%;
   max-width: 550px;
   min-width: 150px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 15px black;
 }
 
 .my-button:hover,
@@ -87,12 +92,16 @@ h1 {
   margin: auto;
   display: inline-block;
   box-sizing: border-box;
+  border: 2px solid black;
+  border-radius: 50px;
   background: #fff;
   padding: 15px;
   width: 100%;
   max-width: 450px;
   text-align: center;
-  background: #FAEBD7;
+  background: no-repeat top/15px url("../img/modal.jpg"); /* Source: https://wallpapercave.com/wp/J7UPnu1.jpg */
+  background-size: cover;
+  background-color: #000;
 }
 
 .modal-close {
@@ -100,8 +109,17 @@ h1 {
   -webkit-appearance: none;
   border: 0;
   background: none;
-  color: #777;
-  text-decoration: underline;
+  color: white;
+  text-decoration: none;
+  text-shadow: 2px 2px 15px black;
+  opacity: 0.6;
+  font-family: inherit;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 .modal h1 {
@@ -112,12 +130,19 @@ h1 {
 .modal p {
   text-align: center;
   text-transform: capitalize;
+  color: #FFEFD5;
+  letter-spacing: 2px;
+  color: #FFEFD5;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 80%;
+  text-shadow: 2px 2px 15px black;
 }
 
-/*.modal img {
-  width: 150px;
-  height: auto;
-}*/
+.modal img {
+  border-radius: 50%;
+  box-shadow: 2px 2px 15px green inset;
+}
 
 /* Will improve this part once the site has a little more content and button sizes are clear*/
 @media all and (max-width: 750px) {
