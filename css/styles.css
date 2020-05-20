@@ -9,6 +9,52 @@ body {
   font-family: 'Shojumaru', cursive;
 }
 
+.page-header {
+  display: flex;
+  position: fixed;
+  background-image: linear-gradient(to right, #030915, #054a85);
+  border-bottom: 1px solid black;
+  max-height: 50px;
+  top: 0;
+  width: 100%;
+}
+
+.page-header__item {
+  flex: 0 1 200px;
+  padding: 0;
+}
+
+/* logo specs */
+.page-header__item:first-child {
+  padding: 0px;
+  height: 40px;
+}
+
+/* navbar specs */
+.page-header__item:last-child {
+  flex-grow: 1;
+  text-align: right;
+  padding-top: 0px;
+  margin-right: 5%;
+}
+
+.navigation-list {
+  list-style-type: none;
+}
+
+.navigation-list li {
+  display: inline-block;
+  margin-left: 15px;
+  max-width: 90%;
+}
+
+.navigation-list a {
+  color: white;
+  font-size: 8px;
+  font-weight: 200;
+  text-decoration: none;
+}
+
 h1 {
   font-size: 25px;
   font-weight: 600;
@@ -34,8 +80,8 @@ h1 {
   transition-duration: 0.4s;
   transition-property: opacity;
   width: 100%;
-  max-width: 550px;
-  min-width: 150px;
+  max-width: 500px;
+  min-width: 215px;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 15px;
@@ -51,12 +97,16 @@ h1 {
 .listing {
   text-align: center;
   margin-bottom: 40px;
+  float: left;
+  margin-left: 10%;
+  width: 450px;
 }
 
 .pokemon-list {
-  list-style-type: none;
+  margin-top: 90px;
   padding: 0;
-  margin: auto;
+  width: 100%;
+  list-style-type: none;
 }
 
 .pokemon-list li {
@@ -135,8 +185,8 @@ h1 {
   color: #FFEFD5;
   font-size: 18px;
   font-weight: 300;
-  line-height: 80%;
   text-shadow: 2px 2px 15px black;
+  margin: 5px;
 }
 
 .modal img {
@@ -145,10 +195,35 @@ h1 {
 }
 
 /* Will improve this part once the site has a little more content and button sizes are clear*/
-@media all and (max-width: 750px) {
-  .pokemon-list li {
+
+
+@media all and (max-width: 600px) {
+  body {
+    background: no-repeat url("../img/mobilebackground.jpg"); /* Source: https://img.wallpapersafari.com/tablet/800/1280/62/7/v1MDdT.jpg */
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+  .page-header {
+    max-height: 70px;
     width: 100%;
-    max-width: 100%;
-    margin: 0;
+  }
+
+  .page-header__item:first-child {
+    margin-top: 15px;
+    margin-left: 10px;
+  }
+
+  .navigation-list li {
+    display: grid;
+    margin-bottom: 5px;
+    margin-left: 15px;
+    color: white;
+    max-width: 90%;
+  }
+
+  .listing {
+    float: none;
+    width: 80%;
   }
 }
