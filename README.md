@@ -11,4 +11,6 @@ This project was part of the CF Full-Stack Web Development course.
 - [ ] 'Back to top' button
 - [ ] Loading indicator
 - [ ] Error handling and error messages (e.g. offline mode)
+- [ ] Hamburger menu on M and S screens
+- [ ] Replace logo
 
