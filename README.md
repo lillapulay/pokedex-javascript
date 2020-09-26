@@ -7,6 +7,7 @@ This project was part of the CF Full-Stack Web Development course.
 
 ## Planned updates:
 - [x] Styling updates (background, modal, favicon, font)
+- [x] Use different background on L and S screens
 - [ ] Search bar, possibly a 'sort' function
 - [ ] 'Back to top' button
 - [ ] Loading indicator
