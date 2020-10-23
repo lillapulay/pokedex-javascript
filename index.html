@@ -2,43 +2,68 @@
 
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="img/favicon.png">
-    <title>PokeScript</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Shojumaru&display=swap" rel="stylesheet">
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Primary Meta Tags -->
+  <title>PokeScript - Gotta fetch(emAll)</title>
+  <meta name="title" content="PokeScript - Gotta fetch(emAll)">
+  <meta name="description" content="Pokedex created with Vanilla JavaScript.">
 
-  <body>
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://metatags.io/">
+  <meta property="og:title" content="PokeScript - Gotta fetch(emAll)">
+  <meta property="og:description" content="Pokedex created with Vanilla JavaScript.">
+  <meta property="og:image"
+    content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png">
 
-    <header class="page-header">
-      <a href="https://lillapulay.github.io/portfolio-website/" target="_blank"><img src="img/logo.png" alt="Personal logo of Lilla Pulay" class="page-header__item"></a>
-      <nav class="main-navigation page-header__item">
-        <ul role="menubar" class="navigation-list">
-          <li role="presentation">
-            <a href="https://github.com/lillapulay/pokedex-javascript/" target="_blank" role="menuitem" class="navigation-list__item"> View code </a>
-          </li>
-          <li role="presentation">
-            <a href="https://www.pokemon.com/us/pokedex/" target="_blank" role="menuitem" class="navigation-list__item"> Official Pokédex </a>
-          </li>
-          <li role="presentation">
-            <a href="https://pokemon.fandom.com/wiki/Pok%C3%A9mon_Wiki" target="_blank" role="menuitem" class="navigation-list__item"> Pokémon Wiki </a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://metatags.io/">
+  <meta property="twitter:title" content="PokeScript - Gotta fetch(emAll)">
+  <meta property="twitter:description" content="Pokedex created with Vanilla JavaScript.">
+  <meta property="twitter:image"
+    content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png">
 
-    <div class='listing'>
-      <ul class='pokemon-list'></ul>
-    </div>
-    <div id='modal-container'></div>
+  <!-- Style -->
+  <link rel="shortcut icon" href="img/favicon.png">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Shojumaru&display=swap" rel="stylesheet">
+</head>
 
-    <!-- Order of scripts is important! 1. promise 2. fetch 3. main js file! -->
-    <script src="js/promise-polyfill.js"></script>
-    <script src="js/fetch-polyfill.js"></script>
-    <script src="js/scripts.js"></script>
-  </body>
+<body>
+
+  <header class="page-header">
+    <a href="https://lillapulay.github.io/portfolio-website/" target="_blank"><img src="img/logo.png"
+        alt="Personal logo of Lilla Pulay" class="page-header__item"></a>
+    <nav class="main-navigation page-header__item">
+      <ul role="menubar" class="navigation-list">
+        <li role="presentation">
+          <a href="https://github.com/lillapulay/pokedex-javascript/" target="_blank" role="menuitem"
+            class="navigation-list__item"> View code </a>
+        </li>
+        <li role="presentation">
+          <a href="https://www.pokemon.com/us/pokedex/" target="_blank" role="menuitem" class="navigation-list__item">
+            Official Pokédex </a>
+        </li>
+        <li role="presentation">
+          <a href="https://pokemon.fandom.com/wiki/Pok%C3%A9mon_Wiki" target="_blank" role="menuitem"
+            class="navigation-list__item"> Pokémon Wiki </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class='listing'>
+    <ul class='pokemon-list'></ul>
+  </div>
+  <div id='modal-container'></div>
+
+  <!-- Order of scripts is important! 1. promise 2. fetch 3. main js file! -->
+  <script src="js/promise-polyfill.js"></script>
+  <script src="js/fetch-polyfill.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
 
 </html>
